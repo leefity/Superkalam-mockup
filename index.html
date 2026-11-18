@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Recall &amp; Rebuild – SuperKalam concept prototype</title>
+<style>
+:root{--bg:#f4f3ef;--card:#fff;--ink:#1c1b19;--mute:#6b6963;--line:#e4e2dc;--acc:#4338ca;--acc2:#eef0ff;--ok:#15803d;--okbg:#e8f6ec;--bad:#b45309;--badbg:#fdf0dc;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141413;--card:#201f1d;--ink:#f1efe9;--mute:#9b988f;--line:#34322e;--acc:#8b93ff;--acc2:#262846;--ok:#5fd08a;--okbg:#17301f;--bad:#f0b35a;--badbg:#3a2c14}}
+:root[data-theme="dark"]{--bg:#141413;--card:#201f1d;--ink:#f1efe9;--mute:#9b988f;--line:#34322e;--acc:#8b93ff;--acc2:#262846;--ok:#5fd08a;--okbg:#17301f;--bad:#f0b35a;--badbg:#3a2c14}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:420px;margin:0 auto;padding:14px}
+h1{font-size:15px;margin:4px 0 2px}
+.sub{color:var(--mute);font-size:12.5px;margin:0 0 10px}
+.steps{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px}
+.steps button{flex:none;border:1px solid var(--line);background:var(--card);color:var(--mute);border-radius:99px;padding:5px 11px;font-size:12px;cursor:pointer}
+.steps button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.phone{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:18px 16px;min-height:560px;display:flex;flex-direction:column;gap:12px}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--mute)}
+h2{font-size:18px;margin:0}
+.q{background:var(--bg);border-radius:12px;padding:10px 12px;font-size:13.5px}
+.row{display:flex;gap:8px;align-items:center}
+.sp{justify-content:space-between}
+.score{font-size:34px;font-weight:700}
+.pill{display:inline-block;border-radius:99px;padding:2px 9px;font-size:12px}
+.ok{background:var(--okbg);color:var(--ok)}.bad{background:var(--badbg);color:var(--bad)}.ac{background:var(--acc2);color:var(--acc)}
+.box{border:1px solid var(--line);border-radius:14px;padding:12px}
+button.p{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:12px;font-size:15px;font-weight:600;cursor:pointer;width:100%}
+button.s{background:transparent;color:var(--mute);border:1px solid var(--line);border-radius:12px;padding:10px;font-size:14px;cursor:pointer;width:100%}
+.tog{display:flex;background:var(--bg);border-radius:10px;padding:3px}
+.tog button{flex:1;border:0;background:transparent;color:var(--mute);padding:7px;border-radius:8px;cursor:pointer;font-size:13.5px}
+.tog button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px #0002}
+textarea{width:100%;min-height:150px;border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--card);color:var(--ink);font:inherit;resize:none}
+.mic{width:76px;height:76px;border-radius:50%;border:0;background:var(--acc);color:#fff;font-size:28px;margin:10px auto;display:block;cursor:pointer}
+.mic.rec{animation:pu 1.2s infinite}@keyframes pu{50%{box-shadow:0 0 0 14px #4338ca33}}
+.card{min-height:150px;border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;justify-content:center;text-align:center;cursor:pointer;background:var(--acc2)}
+.bar{height:8px;border-radius:9px;background:var(--line);overflow:hidden}.bar i{display:block;height:100%;background:var(--acc)}
+ul{margin:6px 0 0;padding-left:18px}li{margin:3px 0}
+.item{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.note{font-size:12px;color:var(--mute)}
+.flex1{flex:1}
+.side{display:none}
+body.lap .wrap{max-width:1080px}
+.lap .frame{display:grid;grid-template-columns:210px 1fr;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+.lap .side{display:flex;flex-direction:column;gap:4px;padding:16px 12px;border-right:1px solid var(--line);background:var(--bg)}
+.side a{padding:8px 10px;border-radius:8px;font-size:14px;color:var(--mute);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.side a.act{background:var(--acc2);color:var(--acc);font-weight:600}
+.lap .phone{border:0;border-radius:0;padding:26px 34px;min-height:600px;display:grid;grid-template-columns:1fr 1fr;gap:14px 22px;align-content:start}
+.lap .phone>*:not(.box){grid-column:1/-1}
+.lap .phone>div[style="flex:1"]{display:none}
+.lap .phone.two>.box{grid-column:auto}
+.lap h2{font-size:22px}
+.lap textarea{min-height:220px}
+.lap .card{min-height:230px}
+.lap .phone>button.p,.lap .phone>button.s{width:auto;justify-self:start;padding:11px 24px}
+@media(max-width:760px){.lap .frame{grid-template-columns:1fr}.lap .side{display:none}.lap .phone{padding:18px 16px;display:flex}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Recall &amp; Rebuild · concept prototype</h1>
+<p class="sub">Unofficial concept for SuperKalam. Tap through the flow, or jump to any screen.</p>
+<div class="tog dv" style="margin-bottom:10px;max-width:260px"><button id="d_m" onclick="dev('mob')">📱 Mobile</button><button id="d_l" onclick="dev('lap')">💻 Laptop</button></div>
+<div class="steps" id="steps"></div>
+<div class="frame"><aside class="side" id="side"></aside><div class="phone" id="screen"></div></div>
+<p class="note" style="margin-top:10px">Mock data only. Intervals (1/3/7 days) and the 3-a-day cap are pilot hypotheses.</p>
+</div>
+<script>
+var Q='GS2 · Polity — Discuss the significance of the Sixth Schedule for tribal self-governance. (10 marks)';
+var names=['Result','Recall','Gaps','Flashcards','Rewrite','Queue'];
+var cur=0,mode='type',rec=false,card=0,flip=false,rw='';
+var cards=[['Intro','Art. 244(2) &amp; 275(1): autonomy for tribal areas in Assam, Meghalaya, Tripura, Mizoram'],['Core','Autonomous District/Regional Councils: legislative, judicial and financial powers'],['Gap','Governor can alter areas and boundaries — often forgotten'],['Gap','Issue: weak finances and delayed council elections'],['Way forward','Fiscal devolution, regular elections, capacity building']];
+function go(n){cur=n;draw()}
+function side(){var a=cur==5;document.getElementById('side').innerHTML='<b style="padding:6px 10px 12px;font-size:15px">SuperKalam</b><a>🏠 Dashboard</a><a class="'+(a?'':'act')+'" onclick="go(0)">✍️ Daily Challenge</a><a class="'+(a?'act':'')+'" onclick="go(5)">🔁 Revision queue <span class="pill ac">2</span></a><a>🏆 Leaderboard</a><a>📝 GS notes</a>'}
+function dev(m){document.body.className=m;document.getElementById('d_m').className=m=='mob'?'on':'';document.getElementById('d_l').className=m=='lap'?'on':'';draw()}
+function steps(){side();document.getElementById('steps').innerHTML=names.map(function(n,i){return '<button class="'+(i==cur?'on':'')+'" onclick="go('+i+')">'+(i+1)+'. '+n+'</button>'}).join('')}
+function head(t){return '<div class="top"><span>Daily Mains Challenge</span><span>🔥 12-day streak</span></div><h2>'+t+'</h2>'}
+function draw(){
+steps();var h='';document.getElementById('screen').className='phone'+(cur==2?' two':'');
+if(cur==0){h=head('Your evaluation')+'<div class="q">'+Q+'</div><div class="row sp"><div><div class="score">5.0<span style="font-size:16px;color:var(--mute)">/10</span></div><span class="pill ac">Rank 142 today</span></div><div style="text-align:right"><span class="pill ok">3 strengths</span><br><span class="pill bad" style="margin-top:4px">4 gaps</span></div></div><div class="box"><b>Strengths</b><ul><li>Clear introduction</li><li>Good use of constitutional articles</li></ul><b style="display:block;margin-top:8px">Areas to improve</b><ul><li>Missing issues &amp; way forward</li></ul></div><div style="flex:1"></div><button class="p" onclick="go(1)">🧠 Recall it · 2 min</button><button class="s">Read model answer</button><p class="note" style="text-align:center;margin:0">Optional · earns a bonus streak point</p>'}
+if(cur==1){h=head('Recall from memory')+'<div class="q">'+Q+'</div><div class="tog"><button class="'+(mode=='type'?'on':'')+'" onclick="mode=\'type\';draw()">⌨️ Type</button><button class="'+(mode=='voice'?'on':'')+'" onclick="mode=\'voice\';draw()">🎙️ Voice</button></div>'+(mode=='type'?'<textarea placeholder="Without looking, list the key points you now remember…"></textarea>':'<div style="text-align:center"><button class="mic '+(rec?'rec':'')+'" onclick="rec=!rec;draw()">'+(rec?'■':'🎙️')+'</button><div class="note">'+(rec?'Listening… tap to stop':'Tap to speak. Typing works equally well.')+'</div></div>')+'<div class="row"><span class="pill ac">⏱ 02:00</span><span class="note">No model answer shown</span></div><div style="flex:1"></div><button class="p" onclick="go(2)">Check what I missed</button>'}
+if(cur==2){h=head('What you still missed')+'<div class="row"><span class="pill ok">Recalled 3 of 7</span><span class="pill bad">4 gaps</span></div><div class="bar"><i style="width:43%"></i></div><div class="box"><b>✅ You remembered</b><ul><li>Articles 244(2) &amp; 275(1)</li><li>District councils</li><li>Tribal autonomy</li></ul></div><div class="box" style="border-color:var(--bad)"><b>⚠️ Still missing</b><ul><li>Governor’s power over areas</li><li>Council finance problems</li><li>Delayed elections</li><li>Way forward</li></ul></div><div style="flex:1"></div><button class="p" onclick="go(3)">Build my skeleton</button>'}
+if(cur==3){var c=cards[card];h=head('Skeleton flashcards')+'<div class="row sp"><span class="note">Card '+(card+1)+' of '+cards.length+'</span><span class="pill '+(c[0]=='Gap'?'bad':'ac')+'">'+c[0]+'</span></div><div class="card" onclick="flip=!flip;draw()">'+(flip?'<div>'+c[1]+'</div>':'<div class="note">Tap to reveal</div><div style="font-size:17px;margin-top:6px"><b>'+(c[0]=='Intro'?'How do you open?':c[0]=='Way forward'?'How do you conclude?':'Point '+(card+1)+' — what goes here?')+'</b></div>')+'</div><div class="row"><button class="s flex1" onclick="card=Math.max(0,card-1);flip=false;draw()">← Back</button><button class="s flex1" onclick="card=Math.min(cards.length-1,card+1);flip=false;draw()">Next →</button></div><div style="flex:1"></div><button class="p" onclick="go(5)">Schedule my rewrite</button><button class="s" onclick="go(4)">Preview the rewrite screen</button>'}
+if(cur==4){h=head('Rewrite from memory')+'<div class="row sp"><span class="pill ac">Day 3 rewrite</span><span class="pill ac">⏱ 05:00</span></div><div class="q">'+Q+'</div><textarea id="rw" placeholder="Type, or upload a photo of your handwritten answer…">'+rw+'</textarea><div class="row"><button class="s flex1">📷 Upload handwriting</button></div><div style="flex:1"></div><button class="p" onclick="rw=document.getElementById(\'rw\').value;done()">Submit rewrite</button>'}
+document.getElementById('screen').innerHTML=h;
+if(cur==5)queue();
+}
+function done(){steps();document.getElementById('screen').innerHTML=head('Your improvement')+'<div class="box"><div class="row sp"><div><div class="note">Day 0</div><div class="score" style="font-size:26px">5.0</div></div><div style="font-size:24px">→</div><div><div class="note">Day 3</div><div class="score" style="font-size:26px;color:var(--ok)">7.0</div></div><span class="pill ok">+2.0</span></div></div><div class="box"><b>🆕 Now remembered</b><ul><li>Governor’s powers</li><li>Delayed elections</li></ul><b style="display:block;margin-top:8px">↩️ Slipped</b><ul><li>Fiscal devolution</li></ul></div><p class="note">Next rewrite in 7 days. Slipped points bring it back sooner.</p><div style="flex:1"></div><button class="p" onclick="go(5)">View revision queue</button>'}
+function queue(){document.getElementById('screen').innerHTML=head('Revision queue')+'<div class="row sp"><span class="pill ac">2 of 3 today</span><span class="note">Daily cap keeps it light</span></div><div class="box"><div class="item"><div><b>Sixth Schedule</b><div class="note">GS2 Polity · Day 3 rewrite</div></div><button class="p" style="width:auto;padding:8px 14px;font-size:13px" onclick="go(4)">Start</button></div><div class="item"><div><b>Federalism &amp; GST Council</b><div class="note">GS2 Polity · Day 1 rewrite</div></div><button class="s" style="width:auto;padding:8px 14px;font-size:13px">Snooze</button></div><div class="item"><div><b>Monsoon &amp; agriculture</b><div class="note">GS1 Geography · Tomorrow</div></div><span class="pill ac">Tomorrow</span></div><div class="item"><div><b>Sixth Schedule</b><div class="note">Day 7 rewrite · Wed</div></div><span class="pill ac">Scheduled</span></div></div><p class="note">Skipping or snoozing never breaks your streak. Completed rewrites add to it.</p><div style="flex:1"></div><button class="s" onclick="go(0)">↺ Restart flow</button>'}
+dev('lap');
+</script>
+</body>
+</html>
